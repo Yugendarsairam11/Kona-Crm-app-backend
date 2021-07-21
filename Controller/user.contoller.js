@@ -1,6 +1,7 @@
 var userModel=require('../model/users.model')
 var jwt=require('jsonwebtoken')
 var config=require('../config/config')
+const { model } = require('mongoose')
 exports.registerUser=(request,response)=>{
     var userData=request.body
     var newData=new userModel(userData)
@@ -44,6 +45,46 @@ exports.passwordupdate=function(request,response){
         }
         if(docs){
             response.send({status:true,message:'password updated'})
+        }
+    })
+}
+
+exports.updateProfile=function(request,response){
+    var emailId=request.body.emailId
+    var body=request.body
+    console.log(body)
+    userModel.updateOne({emailId:emailId},body,(error,res)=>{
+        if(error){
+            response.send(error)
+        }
+        if(res){
+            response.send({message:"profile Updated",result:true})
+        }
+    })
+}
+
+exports.getUserById=function(request,response){
+    var email=request.body.email
+    var body=request.body
+    userModel.findOne({emailId:email},(error,data)=>{
+        if(error){
+            response.send(error)
+        }
+        if(data){
+            response.send(data)
+        }
+    })
+}
+
+exports.getUserByChoice=function(request,response){
+    var body=request.body
+    var name=request.body.name
+    userModel.findOne({username:name},(error,data)=>{
+        if(error){
+            response.send(error)
+        }
+        if(data){
+            response.send(data)
         }
     })
 }

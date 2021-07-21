@@ -9,6 +9,16 @@ var userModel=new Schema({
     },
     password:{
         type:String
+    },
+    image:{
+        type:String
+    },
+    number:{
+        type:String
+    },    
+    location:{
+        type:String
     }
+    
 })
 module.exports=Mongoose.model('users',userModel)
